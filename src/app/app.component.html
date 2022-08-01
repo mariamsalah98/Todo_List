@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-3">
+      <div class="card text-center">
+        <div class="card-header bg-info">
+          To Do List
+        </div>
+        <div class="card-body">
+          <form class="m-3" #AddItemForm="ngForm" (ngSubmit)="addItem(AddItemForm)">
+           <div class="m-3" style="display : inline ;">
+            <input  name="todoItem" id="todoItem" type="text" [(ngModel)]="newItem"
+            placeholder="Please Enter An Item.." />
+           </div> 
+            <button class="btn btn-info " type="submit">Add Item</button>
+          </form>
+          <div class="m-3 ">
+            <button class="btn btn-primary btn-lg m-1" type="button" (click)="allItems()">All</button>
+            <button class="btn btn-primary btn-lg m-1" type="button" (click)="todoItems()">ToDo</button>
+            <button class="btn btn-primary btn-lg m-1" type="button" (click)="doneItems()">Done</button>
+          </div>
+          <div *ngFor="let item of ToDoFiltered">
+            <input type="checkbox" [(ngModel)]="item.done" />
+            <h3 style="display : inline ;">{{item.name}} </h3>
+            <div *ngIf="!isEditClicked || editedItem!=item.name">
+              <button class="btn btn-danger" type="button" (click)="deleteItem(item)">Delete</button>
+              <button class="btn btn-primary" type="button" (click)="editItem(item)">Edit</button>
+            </div>
+            <div *ngIf="isEditClicked && editedItem==item.name">
+              <form #EditItemForm="ngForm" (ngSubmit)="saveItem(EditItemForm , item)">
+                <input type="text" [(ngModel)]="newEditedItem" name="editedItem" id="editedItem" />
+                <button class="btn btn-primary" type="submit">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
